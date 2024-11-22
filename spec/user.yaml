@@ -1,0 +1,177 @@
+openapi: 3.0.0
+info:
+  title: User Management API
+  description: API pour gérer les utilisateurs (CRUD).
+  version: 1.0.0
+
+paths:
+  /users:
+    post:
+      summary: Créer un nouvel utilisateur
+      description: Permet de créer un utilisateur dans le système.
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: johndoe
+                email:
+                  type: string
+                  example: johndoe@example.com
+                password:
+                  type: string
+                  format: password
+                  example: strongpassword123
+              required:
+                - username
+                - email
+                - password
+      responses:
+        '201':
+          description: Utilisateur créé avec succès.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Erreur de validation des données.
+
+    get:
+      summary: Obtenir la liste des utilisateurs
+      description: Retourne une liste paginée des utilisateurs.
+      operationId: getUsers
+      parameters:
+        - name: page
+          in: query
+          description: Numéro de la page.
+          schema:
+            type: integer
+            example: 1
+        - name: limit
+          in: query
+          description: Nombre d'utilisateurs par page.
+          schema:
+            type: integer
+            example: 10
+      responses:
+        '200':
+          description: Liste des utilisateurs.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+
+  /users/{id}:
+    get:
+      summary: Obtenir les détails d'un utilisateur
+      description: Retourne les informations d'un utilisateur spécifique.
+      operationId: getUserById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID de l'utilisateur.
+          schema:
+            type: string
+            example: 1234
+      responses:
+        '200':
+          description: Informations de l'utilisateur.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: Utilisateur non trouvé.
+
+    put:
+      summary: Mettre à jour un utilisateur
+      description: Met à jour les informations d'un utilisateur existant.
+      operationId: updateUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID de l'utilisateur.
+          schema:
+            type: string
+            example: 1234
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: johndoe_updated
+                email:
+                  type: string
+                  example: johndoe_updated@example.com
+                password:
+                  type: string
+                  format: password
+                  example: newstrongpassword123
+      responses:
+        '200':
+          description: Utilisateur mis à jour avec succès.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Erreur de validation des données.
+        '404':
+          description: Utilisateur non trouvé.
+
+    delete:
+      summary: Supprimer un utilisateur
+      description: Supprime un utilisateur existant.
+      operationId: deleteUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: ID de l'utilisateur.
+          schema:
+            type: string
+            example: 1234
+      responses:
+        '204':
+          description: Utilisateur supprimé avec succès.
+        '404':
+          description: Utilisateur non trouvé.
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          example: 1234
+        username:
+          type: string
+          example: johndoe
+        name:
+          type: string
+          example: John Doe
+        email:
+          type: string
+          example: johndoe@example.com
+        createdAt:
+          type: string
+          format: date-time
+          example: 2023-11-21T10:15:30Z
+        updatedAt:
+          type: string
+          format: date-time
+          example: 2023-11-22T10:15:30Z
