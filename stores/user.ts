@@ -6,7 +6,6 @@ export const useUserStore = defineStore("user", () => {
     console.log("BASE_URL", OpenAPI);
     try {
       const users = await DefaultService.getUsers({});
-      console.log(users);
       return users;
     } catch (e) {
       console.log(e);

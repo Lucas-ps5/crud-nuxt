@@ -13,7 +13,7 @@ const isLoading = computed<boolean>(() => status.value === "pending");
 </script>
 
 <template>
-  <section>
+  <section class="flex flex-col gap-y-12">
     <h1 class="text-4xl py-8">User details - {{ route.params.id }}</h1>
     <section>
       <span v-if="isLoading">Loading...</span>

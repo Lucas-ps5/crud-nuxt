@@ -1,0 +1,143 @@
+openapi: 3.0.3
+info:
+  title: post Management API
+  description: API for managing posts with the structure `{ userId, id, title, body }`
+  version: 1.0.0
+paths:
+  /posts:
+    get:
+      summary: Get all posts
+      responses:
+        '200':
+          description: A list of posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PostDTO'
+    post:
+      summary: Create a new post
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePostDTO'
+      responses:
+        '201':
+          description: The created post
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostDTO'
+  /posts/{id}:
+    get:
+      summary: Get an post by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: The post with the specified ID
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostDTO'
+        '404':
+          description: post not found
+    put:
+      summary: Update an post by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePostDTO'
+      responses:
+        '200':
+          description: The updated post
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostDTO'
+        '404':
+          description: post not found
+    patch:
+      summary: Partially update an post by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: integer
+                title:
+                  type: string
+                body:
+                  type: string
+      responses:
+        '200':
+          description: The partially updated post
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PostDTO'
+        '404':
+          description: post not found
+    delete:
+      summary: Delete an post by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: post deleted successfully
+        '404':
+          description: post not found
+components:
+  schemas:
+    PostDTO:
+      type: object
+      properties:
+        userId:
+          type: integer
+        id:
+          type: integer
+        title:
+          type: string
+        body:
+          type: string
+    CreatePostDTO:
+      type: object
+      properties:
+        userId:
+          type: integer
+        title:
+          type: string
+        body:
+          type: string
+      required:
+        - userId
+        - title
+        - body
