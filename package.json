@@ -9,7 +9,8 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "generate-openapi-user": "openapi --input ./spec/user.yaml --output ./services/user --useOptions --client axios"
+    "generate-openapi-user": "openapi --input ./spec/user.yaml --output ./services/user --useOptions --client axios",
+    "generate-openapi-post": "openapi --input ./spec/post.yaml --output ./services/post --useOptions --client axios"
   },
   "dependencies": {
     "@pinia/nuxt": "^0.7.0",
@@ -19,7 +20,8 @@
     "openapi-typescript-codegen": "^0.29.0",
     "pinia": "^2.2.6",
     "vue": "latest",
-    "vue-router": "latest"
+    "vue-router": "latest",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config-typescript": "^12.1.0",

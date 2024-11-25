@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { useUserStore } from "~/stores/user";
-import { type User } from "~/services/user";
+import type { PostDTO } from "~/services/post";
+import { usePostStore } from "~/stores/post";
 
-const store = useUserStore();
+const postStore = usePostStore();
+
 const {
-  data: users,
+  data: posts,
   status,
   error
-} = await useAsyncData<User[]>("users", store.fetchAllUsers, {
+} = await useAsyncData<PostDTO[]>("posts", postStore.fetchAllPosts, {
   lazy: true
 });
 
@@ -18,13 +19,13 @@ const isLoading = computed<boolean>(() => status.value === "pending");
   <div class="p-20 space-y-7">
     <div class="flex justify-between">
       <h1 class="border-b font-bold text-lg text-gray-800 pb-2">
-        Users list page
+        Posts list page
       </h1>
-      <NuxtLink to="/user/create">
+      <NuxtLink to="/post/create">
         <button
           class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
         >
-          Create New User
+          Create New Post
         </button>
       </NuxtLink>
     </div>
@@ -33,14 +34,14 @@ const isLoading = computed<boolean>(() => status.value === "pending");
     <span v-else-if="error" class="bg-red-100 text-red-500">{{
       error.message
     }}</span>
-    <div v-else-if="users" class="grid grid-cols-4 gap-5">
+    <div v-else-if="posts" class="flex flex-col gap-5">
       <NuxtLink
-      v-for="user in users"
-      :key="user.id"
-      :to="`/user/${user.id}`"
+      v-for="post in posts"
+      :key="post.id"
+      :to="`/post/${post.id}`"
       class="border rounded-lg p-10"
       >
-        {{ user.username }} - {{ user.email }}
+        {{ post.title }}
       </NuxtLink>
     </div>
     <span v-else>Nothing for the moment</span>
