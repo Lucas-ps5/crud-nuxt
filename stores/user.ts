@@ -1,14 +1,14 @@
 import { defineStore } from "pinia";
-import { DefaultService, type User } from "~/services/user";
+import { DefaultService, OpenAPI, type User } from "~/services/user";
 
 export const useUserStore = defineStore("user", () => {
   const fetchAllUsers = async (): Promise<User[]> => {
+    console.log("BASE_URL", OpenAPI);
     try {
       const users = await DefaultService.getUsers({});
       console.log(users);
       return users;
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
       return [];
     }
@@ -19,16 +19,32 @@ export const useUserStore = defineStore("user", () => {
       const user = await DefaultService.getUserById({ id: userId });
       console.log(user);
       return user;
-    }
-    catch (e) {
+    } catch (e) {
       console.log(e);
       return {};
     }
   };
 
+  const createUser = async (user: { email: string; name: string }) => {
+    try {
+      console.log("call service create user");
+      const response = await DefaultService.createUser({
+        requestBody: {
+          email: user.email,
+          username: user.name,
+          password: "d2lsZnJpZWQ="
+        }
+      });
+
+      return response.id;
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return {
     fetchAllUsers,
     fetchUserById,
+    createUser
   };
 });
