@@ -5,6 +5,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "test:e2e": "start-server-and-test dev http://localhost:3000 'cypress open'",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
@@ -24,12 +25,15 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@cypress/vue": "^6.0.1",
     "@nuxtjs/eslint-config-typescript": "^12.1.0",
     "@nuxtjs/tailwindcss": "npm:@nuxtjs/tailwindcss@nightly",
+    "cypress": "^13.16.0",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
     "prettier": "^3.3.3",
+    "start-server-and-test": "^2.0.8",
     "typescript": "^5.6.3",
     "vue-tsc": "^2.1.10"
   }

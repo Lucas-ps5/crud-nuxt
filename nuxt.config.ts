@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  ssr: true,
   compatibilityDate: "2024-11-01",
   devtools: { enabled: false },
   modules: ["@nuxtjs/tailwindcss", "@pinia/nuxt"],
@@ -14,9 +15,8 @@ export default defineNuxtConfig({
     editorSupport: true
   },
   runtimeConfig: {
-    // restApiBaseUrl: process.env.NUXT_REST_API_BASE_URL,
     public: {
-      restApiBaseUrl: process.env.NUXT_REST_API_BASE_URL // can be overridden by NUXT_API_SECRET environment variable\
+      restApiBaseUrl: process.env.NUXT_REST_API_BASE_URL
     }
   },
   plugins: ["~/plugins/api.ts"]
